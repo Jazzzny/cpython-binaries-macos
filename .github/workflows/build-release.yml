@@ -1,0 +1,30 @@
+name: Build Python
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: macOS-13
+    steps:
+    - uses: actions/checkout@v3
+    - name: Download and extract Python source
+      run: |
+        wget https://www.python.org/ftp/python/3.12.1/Python-3.12.1.tgz
+        tar -xvzf Python-3.12.1.tgz
+        cd Python-3.12.1/Mac/BuildScript/
+    - name: Run build script
+      run: |
+        mkdir ~/Universal/
+        mkdir ~/Universal/other-sources/
+        python3 --dep-target=10.9 --universal-archs=universal2 --build-dir='~/Universal/work'
+    - name: Upload disk image
+      uses: actions/upload-artifact@v3.1.2
+      with:
+        name: Discord Legacy
+        path: ~/Universal/work/diskimage/*.dmg
