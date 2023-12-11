@@ -22,7 +22,7 @@ jobs:
         mkdir ~/Universal/
         mkdir ~/Universal/other-sources/
         cd Python-3.12.1/Mac/BuildScript/
-        python3 build-installer.py --dep-target=10.9 --universal-archs=universal2 --build-dir='~/Universal/work'
+        python3 build-installer.py --dep-target=10.9 --universal-archs=universal2 --build-dir=~/Universal/work
     - name: Upload disk image
       uses: actions/upload-artifact@v3.1.2
       with:
