@@ -13,6 +13,9 @@ jobs:
     runs-on: macOS-13
     steps:
     - uses: actions/checkout@v3
+    - name: Install prerequisites
+      run: |
+        brew install pkg-config
     - name: Download and extract Python source
       run: |
         wget -q https://www.python.org/ftp/python/3.12.1/Python-3.12.1.tgz
