@@ -33,9 +33,15 @@ jobs:
         # https://bugs.python.org/issue46975
         brew remove --ignore-dependencies gettext
         python3 build-installer.py --dep-target=10.9 --universal-archs=universal2 --build-dir=/Users/runner/Universal/work
-        HOMEBREW_NO_AUTO_UPDATE=1 brew install gettext
-    - name: Upload disk image
+        export HOMEBREW_NO_AUTO_UPDATE=1
+        brew install gettext
+    - name: Create flat package
+      run: |
+        mkdir /Users/runner/work/cpython-binaries-macos/cpython-binaries-macos/output
+        python3 /Users/runner/work/cpython-binaries-macos/cpython-binaries-macos/Create-Flat-Installer.py ~/Universal/work/installer/Python.mpkg /Users/runner/work/cpython-binaries-macos/cpython-binaries-macos/output/
+
+    - name: Upload package
       uses: actions/upload-artifact@v3.1.2
       with:
         name: Python
-        path: ~/Universal/work/diskimage/*.dmg
+        path: /Users/runner/work/cpython-binaries-macos/cpython-binaries-macos/output/*.pkg
