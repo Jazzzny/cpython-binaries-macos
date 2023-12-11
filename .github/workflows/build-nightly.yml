@@ -24,6 +24,7 @@ jobs:
     - name: Apply patches
       run: |
         patch Python-src/Mac/BuildScript/build-installer.py /Users/runner/work/cpython-binaries-macos/cpython-binaries-macos/FixError530.patch
+        patch Python-src/Mac/BuildScript/build-installer.py /Users/greatj/Documents/cpython-binaries-macos/FixTclTkLegacy.patch
     - name: Run build script
       run: |
         cd Python-src/Mac/BuildScript/
@@ -60,6 +61,7 @@ jobs:
     - name: Apply patches
       run: |
         patch Python-src/Mac/BuildScript/build-installer.py /Users/runner/work/cpython-binaries-macos/cpython-binaries-macos/FixError530.patch
+        patch Python-src/Mac/BuildScript/build-installer.py /Users/greatj/Documents/cpython-binaries-macos/FixTclTkLegacy.patch
     - name: Run build script
       run: |
         cd Python-src/Mac/BuildScript/
@@ -96,6 +98,7 @@ jobs:
     - name: Apply patches
       run: |
         patch Python-src/Mac/BuildScript/build-installer.py /Users/runner/work/cpython-binaries-macos/cpython-binaries-macos/FixError530.patch
+        patch Python-src/Mac/BuildScript/build-installer.py /Users/greatj/Documents/cpython-binaries-macos/FixTclTkLegacy.patch
     - name: Run build script
       run: |
         cd Python-src/Mac/BuildScript/
@@ -132,6 +135,7 @@ jobs:
     - name: Apply patches
       run: |
         patch Python-src/Mac/BuildScript/build-installer.py /Users/runner/work/cpython-binaries-macos/cpython-binaries-macos/FixError530.patch
+        patch Python-src/Mac/BuildScript/build-installer.py /Users/greatj/Documents/cpython-binaries-macos/FixTclTkLegacy.patch
     - name: Run build script
       run: |
         cd Python-src/Mac/BuildScript/
