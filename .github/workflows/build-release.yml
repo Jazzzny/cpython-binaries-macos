@@ -17,12 +17,16 @@ jobs:
       run: |
         wget -q https://www.python.org/ftp/python/3.12.1/Python-3.12.1.tgz
         tar -xzf Python-3.12.1.tgz
-    - name: Run build script
+    - name: Create support folders
       run: |
         mkdir ~/Universal/
         mkdir ~/Universal/other-sources/
+    - name: Apply patches
+      run: |
+        patch Python-3.12.1/Mac/BuildScript/build-installer.py /Users/runner/work/cpython-binaries-macos/cpython-binaries-macos/FixError530.patch
+    - name: Run build script
+      run: |
         cd Python-3.12.1/Mac/BuildScript/
-        patch build-installer.py /Users/runner/work/cpython-binaries-macos/cpython-binaries-macos/FixError530.patch
         python3 build-installer.py --dep-target=10.9 --universal-archs=universal2 --build-dir=/Users/runner/Universal/work
     - name: Upload disk image
       uses: actions/upload-artifact@v3.1.2
