@@ -1,4 +1,4 @@
-name: Build Python Releases
+name: Build Python 3.11 Nightly
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
     - cron: "0 0 * * *"
 
 jobs:
-  build:
+  build-python311:
     runs-on: macOS-13
     steps:
     - uses: actions/checkout@v3
@@ -15,18 +15,18 @@ jobs:
         brew install pkg-config
     - name: Download and extract Python source
       run: |
-        wget -q https://www.python.org/ftp/python/3.12.1/Python-3.12.1.tgz
-        tar -xzf Python-3.12.1.tgz
+        git clone --depth 1 --branch 3.11 https://github.com/python/cpython.git Python-src
     - name: Create support folders
       run: |
         mkdir ~/Universal/
         mkdir ~/Universal/other-sources/
     - name: Apply patches
       run: |
-        patch Python-3.12.1/Mac/BuildScript/build-installer.py /Users/runner/work/cpython-binaries-macos/cpython-binaries-macos/FixError530.patch
+        patch Python-src/Mac/BuildScript/build-installer.py /Users/runner/work/cpython-binaries-macos/cpython-binaries-macos/FixError530.patch
+        patch Python-src/Mac/BuildScript/build-installer.py /Users/runner/work/cpython-binaries-macos/cpython-binaries-macos/FixTclTkLegacy.patch
     - name: Run build script
       run: |
-        cd Python-3.12.1/Mac/BuildScript/
+        cd Python-src/Mac/BuildScript/
         # https://bugs.python.org/issue46975
         brew remove --ignore-dependencies gettext
         python3 build-installer.py --dep-target=10.9 --universal-archs=universal2 --build-dir=/Users/runner/Universal/work
@@ -41,5 +41,5 @@ jobs:
     - name: Upload package
       uses: actions/upload-artifact@v3.1.2
       with:
-        name: Python
+        name: Python 3.11
         path: /Users/runner/work/cpython-binaries-macos/cpython-binaries-macos/output/*.pkg
