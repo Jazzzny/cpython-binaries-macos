@@ -1,0 +1,34 @@
+name: Build Python Releases
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: macOS-13
+    steps:
+    - uses: actions/checkout@v3
+    - name: Preflight
+      run: |
+        brew install pkg-config
+    - name: Download and extract Python source
+      run: |
+        wget -q https://nightly.link/Jazzzny/cpython-binaries-macos/actions/runs/7174518978/Python.zip
+    - name: Upload package
+      uses: actions/upload-artifact@v3.1.2
+      with:
+        name: Python
+        path: /Users/runner/work/cpython-binaries-macos/cpython-binaries-macos/Python.zip
+    - name: Set release tag
+      run: |
+        echo "release_tag=py3.8-`date '+%m.%d.%Y'`" >> $GITHUB_ENV
+        echo "release_name=Python 3.8 (Nightly, `date '+%m/%d/%Y'`)" >> $GITHUB_ENV
+    - name: Create release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ env.release_tag }}
+        target_commitish: python-3.8
+        prerelease: true
+        name: ${{ env.release_name }}
+        files: |
+          Python.zip
