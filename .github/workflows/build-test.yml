@@ -31,4 +31,6 @@ jobs:
         prerelease: true
         name: ${{ env.release_name }}
         files: |
-          Python.zip
+          *.zip
+        body: |
+            Nightly build of Python 3.8 for macOS, built from HEAD of the cpython 3.8 branch.
