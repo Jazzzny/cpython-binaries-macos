@@ -21,16 +21,15 @@ jobs:
         path: /Users/runner/work/cpython-binaries-macos/cpython-binaries-macos/Python.zip
     - name: Set release tag
       run: |
-        echo "release_tag=py3.8-`date '+%m.%d.%Y'`" >> $GITHUB_ENV
-        echo "release_name=Python 3.8 (Nightly, `date '+%m/%d/%Y'`)" >> $GITHUB_ENV
+        echo "release_tag=`date '+%m.%d.%Y'`" >> $GITHUB_ENV
+        echo "release_name=Python 3 Nightly Builds (`date '+%m/%d/%Y'`)" >> $GITHUB_ENV
     - name: Create release
       uses: softprops/action-gh-release@v1
       with:
         tag_name: ${{ env.release_tag }}
-        target_commitish: python-3.8
         prerelease: true
         name: ${{ env.release_name }}
         files: |
-          *.zip
+          *.pkg
         body: |
-            Nightly build of Python 3.8 for macOS, built from HEAD of the cpython 3.8 branch.
+            Nightly builds of Python 3.8-3.13 for macOS
