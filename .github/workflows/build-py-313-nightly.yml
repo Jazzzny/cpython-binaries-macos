@@ -6,8 +6,8 @@ on:
     - cron: "0 0 * * *"
 
 jobs:
-  build-python312:
-    runs-on: macOS-13
+  build-python313:
+    runs-on: macOS-14
     steps:
     - uses: actions/checkout@v3
     - name: Preflight
