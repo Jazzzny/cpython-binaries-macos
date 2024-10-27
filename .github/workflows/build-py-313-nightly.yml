@@ -3,7 +3,7 @@ name: Build Python 3.13 Nightly
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 0 * * 0"
 
 jobs:
   build-python313:
